@@ -16,7 +16,7 @@ const server = new ApolloServer({
 
 const app = express();
 
-app.use(express.urlencoded({ extended: false })); //changed this to false.. thinking with graphql this may be differnet than with a REST API?
+app.use(express.urlencoded({ extended: false })); //change this to false like the module? thinking with graphql this may be differnet than with a REST API?
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets
@@ -38,4 +38,10 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
-//**modeled after the deep-thoughts server file... */
+startApolloServer(typeDefs, resolvers);
+
+//'query this graph directly': ??
+// curl --request POST \
+//   --header 'content-type: application/json' \
+//   --url http://localhost:3001/graphql \
+//   --data '{"query":"query { __typename }"}'
