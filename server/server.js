@@ -25,9 +25,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // app.use(routes);
-const startApolloServer = async (typeDefs, resolvers) => {
+const startApolloServer = async () => {
   await server.start();
-  server.applyMiddleware({ app }); // * apply Apollo server to Express as middleware
+  await server.applyMiddleware({ app }); // * apply Apollo server to Express as middleware
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
@@ -38,10 +38,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
-startApolloServer(typeDefs, resolvers);
-
-//'query this graph directly': ??
-// curl --request POST \
-//   --header 'content-type: application/json' \
-//   --url http://localhost:3001/graphql \
-//   --data '{"query":"query { __typename }"}'
+startApolloServer();
