@@ -44,7 +44,7 @@ const resolvers = {
           { $addToSet: { savedBooks: { input } } },
           { new: true, runValidators: true }
         );
-        console.log(updatedUser, { updatedUser });
+
         return updatedUser;
       }
     },

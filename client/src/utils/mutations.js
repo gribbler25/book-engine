@@ -25,19 +25,20 @@ export const ADD_USER = gql`
 `;
 //need help with these !
 export const SAVE_BOOK = gql`
-mutation saveBook(title:String!, authors: [String!], bookId:Int!){
-    saveBook(title:$title, authors:$[authors], bookId:$bookId){
-        _id
-        username
-        savedBooks
-
+  mutation saveBook($title: String, $authors: [String], $bookId: ID!) {
+    saveBook(title: $title, authors: $authors, bookId: $bookId) {
+      _id
+      username
+      savedBooks
     }
-}`;
+  }
+`;
 export const REMOVE_BOOK = gql`
-mutation removeBook(bookId: Int!){
-    removeBook(bookId: $bookId){
-        _id
-        username
-        savedBooks
+  mutation removeBook($bookId: ID!) {
+    removeBook(bookId: $bookId) {
+      _id
+      username
+      savedBooks
     }
-}`;
+  }
+`;
