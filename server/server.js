@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === "production") {
 // app.use(routes);
 const startApolloServer = async () => {
   await server.start();
-  await server.applyMiddleware({ app }); // * apply Apollo server to Express as middleware
+  server.applyMiddleware({ app }); // * apply Apollo server to Express as middleware
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);

@@ -30,9 +30,9 @@ const LoginForm = () => {
 
     try {
       const { data } = await loginUser({ variables: { ...userFormData } }); //changed this
-      console.log(data);
+      console.log(data.token);
 
-      Auth.login(data.token);
+      Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
       setShowAlert(true);

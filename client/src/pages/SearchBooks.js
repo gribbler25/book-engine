@@ -29,7 +29,7 @@ const SearchBooks = () => {
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   //returning a callback function inside the useEffect acts like calling the componentWillUnmount
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+    return () => saveBookIds(savedBookIds); //saveBookIds is fx from localStorage file,
   });
 
   // create method to search for books and set state on form submit
@@ -56,7 +56,8 @@ const SearchBooks = () => {
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || "",
       }));
-      saveBookIds(bookData.bookId);
+      console.log(bookData);
+      // saveBookIds(bookData.bookId);
       setSearchedBooks(bookData);
       setSearchInput("");
     } catch (err) {
@@ -76,10 +77,11 @@ const SearchBooks = () => {
       return false;
     }
     try {
-      await saveBook({ variables: { bookId } });
-
+      console.log(bookToSave); //this works, bookId is in here...
+      const { data } = await saveBook({ variables: { bookId } });
+      console.log(data);
       // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedBookIds([...savedBookIds, bookToSave.bookId]); //**??data.bookId?
     } catch (e) {
       console.error(e);
     }
