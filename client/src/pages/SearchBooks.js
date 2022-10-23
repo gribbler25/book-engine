@@ -68,6 +68,7 @@ const SearchBooks = () => {
   // **changed to useMutation for saveBook
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
+    console.log(searchedBooks); //this gets data
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
     // get token
@@ -78,8 +79,11 @@ const SearchBooks = () => {
     }
     try {
       console.log(bookToSave); //this works, bookId is in here...
-      const { data } = await saveBook({ variables: { bookId } });
-      console.log(data);
+      //something wrong with the saveBook request,  not going any further..
+      const { data } = await saveBook({
+        variables: { bookData: { ...bookToSave } },
+      });
+      console.log(data); //nothing, not getting here.
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]); //**??data.bookId?
     } catch (e) {
