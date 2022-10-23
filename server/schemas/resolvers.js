@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-const { User, Thought } = require("../models");
+const { User } = require("../models");
+// const { SAVE_BOOK } = require("../../client/src/utils/mutations");
 
 const resolvers = {
   Query: {
@@ -8,9 +9,9 @@ const resolvers = {
       // get a single user with args..this is for the 'me' query
       async (parent, args, context) => {
         if (context.user) {
-          const userData = await User.findOne({ _id: context.user._id }).select(
-            "-__v -password"
-          );
+          const userData = await User.findOne({ _id: context.user._id })
+            .select("-__v -password")
+            .populate("savedBooks");
           return userData;
         }
         throw new AuthenticationError("Not logged in");
@@ -42,9 +43,10 @@ const resolvers = {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $push: { savedBooks: args } },
-          { new: true, runValidators: true }
+          { new: true }
         );
-        return { updatedUser };
+
+        return updatedUser;
       }
     },
 
@@ -55,7 +57,7 @@ const resolvers = {
           { $pull: { savedBooks: { bookId: args.bookId } } },
           { new: true }
         );
-        return { updatedUser };
+        return updatedUser;
       }
     },
   },

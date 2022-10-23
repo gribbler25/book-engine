@@ -16,7 +16,7 @@ const server = new ApolloServer({
 
 const app = express();
 
-app.use(express.urlencoded({ extended: false })); //changed this to false.. thinking with graphql this may be differnet than with a REST API?
+app.use(express.urlencoded({ extended: false })); //change this to false like the module? thinking with graphql this may be differnet than with a REST API?
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // app.use(routes);
-const startApolloServer = async (typeDefs, resolvers) => {
+const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app }); // * apply Apollo server to Express as middleware
   db.once("open", () => {
@@ -38,4 +38,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
-//**modeled after the deep-thoughts server file... */
+startApolloServer();
