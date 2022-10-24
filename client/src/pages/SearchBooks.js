@@ -57,7 +57,7 @@ const SearchBooks = () => {
         image: book.volumeInfo.imageLinks?.thumbnail || "",
       }));
       console.log(bookData);
-      // saveBookIds(bookData.bookId);
+
       setSearchedBooks(bookData);
       setSearchInput("");
     } catch (err) {
@@ -69,7 +69,7 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     console.log(searchedBooks); //this gets data
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    const bookData = searchedBooks.find((book) => book.bookId === bookId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -78,15 +78,15 @@ const SearchBooks = () => {
       return false;
     }
     try {
-      console.log(bookToSave); //this works, bookId is in here...
+      console.log(bookData); //this works, bookId is in here...
       //something wrong with the saveBook request,  not going any further..
       await saveBook({
-        variables: { bookData: { ...bookToSave } },
+        variables: { bookData },
       });
-      console.log(error);
+
       //nothing, not getting here.
       // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedBookIds([...savedBookIds, bookData.bookId]);
     } catch (e) {
       console.error(e);
     }

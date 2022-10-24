@@ -1,5 +1,5 @@
 import React from "react";
-// {useState}
+// {useState}?
 import {
   Jumbotron,
   Container,
@@ -17,7 +17,7 @@ import { REMOVE_BOOK } from "../utils/mutations";
 
 const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data, refetch } = useQuery(GET_ME);
   console.log(data);
   // setUserData(data);
   const userData = data?.me || [];
@@ -36,13 +36,14 @@ const SavedBooks = () => {
     try {
       console.log(bookId);
       // const updatedUser =
-      await removeBook({ variables: { bookId } }); // ? variables corect?
-
+      const data = await removeBook({ variables: { bookId } }); // ? variables corect?
+      console.log(data);
+      refetch();
       // setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (e) {
-      console.error(e);
+      console.error("this  error from handleDeleteBook", e);
     }
   };
 
